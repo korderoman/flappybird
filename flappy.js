@@ -8,7 +8,9 @@ var musica;
 function preload(){
     musica=loadSound("flappy.mp3");
 }
-
+//revisar la musica
+//agregar puntajes
+//agregar instrucciones.
 function setup(){
     createCanvas(800, 500);
     bird= new Aves();
@@ -26,20 +28,22 @@ function setup(){
 
 
 function draw(){
-   musical();
+  
     if(gameOver==true){
         background(255);
         image(imagenFondo,bird.ave.position.x-calibrador, 0, 800, 500);
         start.mousePressed(newGame);
-        
+        musica.stop();
     }
     if(gameOver==false){
-       
-        bird.movimiento();
+        calibrador=380;
         pipe.crearTubos(bird);
         pipe.muerteTubos(bird);
         bird.muerte(pipe);
+        bird.movimiento();
+       
         drawSprites();
+        if(musica.isPlaying()){}else{musica.play();}
     }
    
 
@@ -56,21 +60,14 @@ function juegoTerminado(){
 };
 
 function newGame(){
-   
+    
     pipe.tuboArray.removeSprites();
     gameOver=false;
+    bird.vida=3;
     updateSprites(true);
     bird.ave.position.x=width/2;
     bird.ave.position.y=height/2;
     bird.ave.velocity.y=0;
     
     start.hide();
-}
-function musical(){
-    if(gameOver==true){musica.stop();}
-    if(gameOver==false){
-        if(musica.isPlaying()){
-
-        }else{musica.play();}
-        }
 }
